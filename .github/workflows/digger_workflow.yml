@@ -30,7 +30,7 @@ jobs:
         run: echo digger run ${{ inputs.id }}
         shell: bash      
       - uses: actions/checkout@v4
-      - uses: diggerhq/digger@feat/refactor-ee-to-use-provider
+      - uses: diggerhq/digger@vee
         with:
           ee: 'true'
           setup-aws: true
