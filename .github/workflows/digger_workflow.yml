@@ -30,7 +30,7 @@ jobs:
         run: echo digger run ${{ inputs.id }}
         shell: bash      
       - uses: actions/checkout@v4
-      - uses: diggerhq/digger-ee@vLatest
+      - uses: diggerhq/digger-ee@vee
         with:
           setup-aws: true
           # recommended to use oidc instead
