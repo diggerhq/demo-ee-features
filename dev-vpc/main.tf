@@ -1,5 +1,3 @@
-
-
 resource "aws_ssm_parameter" "foo" {
   name  = "dev/vpc"
   type  = "String"
