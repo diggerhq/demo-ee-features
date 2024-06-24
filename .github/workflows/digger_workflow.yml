@@ -30,7 +30,7 @@ jobs:
         run: echo digger run ${{ inputs.id }}
         shell: bash      
       - uses: actions/checkout@v4
-      - uses: diggerhq/digger@vLatest
+      - uses: diggerhq/digger@feat/ee-use-common-comment-summary
         with:
           ee: 'true'
           setup-aws: true
