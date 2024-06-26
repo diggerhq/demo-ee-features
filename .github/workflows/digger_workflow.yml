@@ -30,7 +30,7 @@ jobs:
         run: echo digger run ${{ inputs.id }}
         shell: bash      
       - uses: actions/checkout@v4
-      - uses: diggerhq/digger@fix/support-mgmt-repo-policies
+      - uses: diggerhq/digger@feat/directory-lookups
         with:
           ee: 'true'
           setup-aws: true
