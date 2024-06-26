@@ -11,4 +11,7 @@ projects:
   - name: prod-ec2
     dir: prod-ec2
     #depends_on: ["prod-vpc"]
-
+  - name: staging-vpc
+    dir: staging/vpc
+  - name: staging-cluster
+    dir: staging/cluster
