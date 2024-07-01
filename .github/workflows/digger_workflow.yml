@@ -25,7 +25,7 @@ jobs:
         run: echo digger run ${{ inputs.id }}
         shell: bash      
       - uses: actions/checkout@v4
-      - uses: diggerhq/digger@feat/directory-lookups
+      - uses: diggerhq/digger@feat/use-digger-spec
         with:
           ee: 'true'
           spec: ${{ inputs.spec }}
