@@ -25,10 +25,10 @@ jobs:
         run: echo digger run ${{ inputs.id }}
         shell: bash      
       - uses: actions/checkout@v4
-      - uses: diggerhq/digger@feat/directory-lookups
+      - uses: diggerhq/digger@feat/use-digger-spec
         with:
           ee: 'true'
-          spec: ${{ inputs.spec }}
+          digger-spec: ${{ inputs.spec }}
           setup-aws: true
           # recommended to use oidc instead
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
