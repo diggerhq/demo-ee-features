@@ -5,12 +5,10 @@ projects:
     dir: dev-vpc
   - name: dev-ec2
     dir: dev-ec2
-    #depends_on: ["dev-vpc"]
   - name: prod-vpc
     dir: prod-vpc
   - name: prod-ec2
     dir: prod-ec2
-    #depends_on: ["prod-vpc"]
   - name: staging-vpc
     dir: staging/vpc
   - name: staging-cluster
