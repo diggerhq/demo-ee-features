@@ -28,7 +28,7 @@ jobs:
       - uses: diggerhq/digger@vLatest
         with:
           ee: 'true'
-          spec: ${{ inputs.spec }}
+          digger-spec: ${{ inputs.spec }}
           setup-aws: true
           # recommended to use oidc instead
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
