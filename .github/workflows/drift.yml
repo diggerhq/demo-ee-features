@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: digger drift detection
-      uses: diggerhq/digger@vLatest
+      uses: diggerhq/digger@vfeat/github-issues-dedup
       with:
         ee: 'true'
         mode: drift-detection
