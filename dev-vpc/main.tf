@@ -21,4 +21,4 @@ resource "aws_ssm_parameter" "foo" {
   value = "10.10.10.0/32"
 }
 
-resource "null_resource" "test" {}
+resource "null_resource" "test2" {}
