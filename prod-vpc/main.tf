@@ -3,3 +3,5 @@
 #  type  = "String"
 #  value = "11.10.10.0/32"
 #}
+
+resource "null_resource" "prod_vpc" {}
