@@ -6,6 +6,7 @@ import future.keywords.in
 # Define required tags that must be present
 required_tags = ["environment", "owner", "cost-center"]
 
+
 # Extract all planned resources from newer Terraform format
 resources[r] {
     r := input.terraform.resource_changes[_]
@@ -52,7 +53,7 @@ deny[msg] {
 # disallow ec2 instances
 deny[msg] {
     r := resources[_]
-    r.resource_type == "aws_instance"
+    r.type == "aws_instance"
     msg = "EC2 instances are not allowed in this environment"
 }
 
