@@ -1,34 +1,58 @@
 package digger
+package terraform.analysis
+
+import future.keywords.in
 
 # Define required tags that must be present
 required_tags = ["environment", "owner", "cost-center"]
 
-# Get all resources that support tags
+# Extract all planned resources from newer Terraform format
 resources[r] {
-    r := input.terraform.root_module.resources[_]
+    r := input.terraform.resource_changes[_]
+    r.change.actions[_] in ["create", "update"]
 }
 
-# Deny if any required tags are missing
+# Helper to get tags based on resource type
+get_tags(resource) = tags {
+    # AWS resources typically use tags directly
+    tags := resource.change.after.tags
+} else = tags {
+    # Azure resources often use tags_all
+    tags := resource.change.after.tags_all
+} else = {} {
+    true
+}
+
+# Main violation check
 deny[msg] {
     r := resources[_]
+    tags := get_tags(r)
     required_tag := required_tags[_]
-    not r.values.tags[required_tag]
+    not tags[required_tag]
+    
     msg := sprintf(
-        "Resource %v of type %v is missing required tag: %v",
+        "Resource %v (%v) is missing required tag: %v",
         [r.address, r.type, required_tag]
     )
 }
 
-# Ensure tags are not empty strings
+# Empty tag check
 deny[msg] {
     r := resources[_]
+    tags := get_tags(r)
     required_tag := required_tags[_]
-    r.values.tags[required_tag] == ""
+    tags[required_tag] == ""
+    
     msg := sprintf(
-        "Resource %v of type %v has empty value for tag: %v",
+        "Resource %v (%v) has empty value for tag: %v",
         [r.address, r.type, required_tag]
     )
 }
 
-# Helper to count violations
+# Summary of violations
 violation_count = count(deny)
+
+# Helper to check if violations exist
+has_violations {
+    count(deny) > 0
+}
