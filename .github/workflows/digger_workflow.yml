@@ -26,7 +26,7 @@ jobs:
         run: echo digger run ${{ inputs.id }}
         shell: bash      
       - uses: actions/checkout@v4
-      - uses: diggerhq/digger@feat/ee-gh-drift-handle-reconciliation
+      - uses: diggerhq/digger@vLatest
         with:
           ee: 'true'
           digger-spec: ${{ inputs.spec }}
