@@ -49,6 +49,13 @@ deny[msg] {
     )
 }
 
+# disallow ec2 instances
+deny[msg] {
+    r := resources[_]
+    r.resource_type == "aws_instance"
+    msg = "EC2 instances are not allowed in this environment"
+}
+
 # Summary of violations
 violation_count = count(deny)
 
