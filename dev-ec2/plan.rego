@@ -1,5 +1,5 @@
 package digger
-package terraform.analysis
+
 
 import future.keywords.in
 
