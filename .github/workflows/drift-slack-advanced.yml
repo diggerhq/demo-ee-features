@@ -19,9 +19,9 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         no-backend: true
+        drift-detection-advanced-slack-notification-url: ${{ secrets.SLACK_WEBHOOK_URL }}
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DIGGER_GITHUB_TOKEN: ${{ secrets.DIGGER_GITHUB_TOKEN }}
-        INPUT_DRIFT_DETECTION_ADVANCED_SLACK_NOTIFICATION_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         DIGGER_LICENSE_KEY: ${{ secrets.DIGGER_LICENSE_KEY }}
