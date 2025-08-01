@@ -1,4 +1,4 @@
-name: Drift Detection
+name: Drift Detection Slack advanced
 
 on:  
   workflow_dispatch:
