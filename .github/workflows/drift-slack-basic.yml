@@ -1,0 +1,27 @@
+name: Drift Detection Slack advanced
+
+on:  
+  workflow_dispatch:
+  #schedule: ## Schedule the job to run at 12.am daily.
+  #  - cron: '0 0 * * *'
+
+jobs:
+  detect-drift:
+    runs-on: ubuntu-latest
+    steps:
+    - name: digger drift detection
+      uses: diggerhq/digger@feat/support-drift-advanced-mode
+      with:
+        ee: 'true'
+        mode: drift-detection
+        setup-terraform: true
+        setup-aws: true
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        no-backend: true
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DIGGER_GITHUB_TOKEN: ${{ secrets.DIGGER_GITHUB_TOKEN }}
+        INPUT_DRIFT_DETECTION_SLACK_NOTIFICATION_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        DIGGER_LICENSE_KEY: ${{ secrets.DIGGER_LICENSE_KEY }}
