@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: digger drift detection
-      uses: diggerhq/digger@vLatest
+      uses: diggerhq/digger@feat/support-drift-advanced-mode)
       with:
         ee: 'true'
         mode: drift-detection
@@ -22,5 +22,5 @@ jobs:
         GITHUB_CONTEXT: ${{ toJson(github) }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DIGGER_GITHUB_TOKEN: ${{ secrets.DIGGER_GITHUB_TOKEN }}
-        INPUT_DRIFT_GITHUB_ISSUES: 'true'
+        INPUT_DRIFT_DETECTION_ADVANCED_SLACK_NOTIFICATION_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         DIGGER_LICENSE_KEY: ${{ secrets.DIGGER_LICENSE_KEY }}
