@@ -2,23 +2,17 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "5.24.0"
+      version = "~> 5.0"
     }
   }
-    backend "s3" {
-    bucket = "digger-states-test"              # Change if a different S3 bucket name was used for the backend 
-    /* Un-comment to use DynamoDB state locking
-    dynamodb_table = "digger-locktable-quickstart-aws"      # Change if a different DynamoDB table name was used for backend
-    */
-    key    = "terraform/state"
-    region = "us-east-1"
-  }
 }
 
-resource "aws_ssm_parameter" "foo" {
-  name  = "/dev/vpc"
-  type  = "String"
-  value = "10.10.10.0/32"
+provider "aws" {
+  region = "us-east-1"
 }
 
-resource "null_resource" "test2" {}
+# This EC2 instance should trigger the Rego deny rule
+resource "aws_instance" "test" {
+  ami           = "ami-0c55b159cbfafe1f0"  # Amazon Linux 2 AMI
+  instance_type = "t2.micro"
+}
