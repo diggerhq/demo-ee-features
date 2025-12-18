@@ -26,7 +26,7 @@ jobs:
         run: echo digger run ${{ inputs.id }}
         shell: bash      
       - uses: actions/checkout@v4
-      - uses: diggerhq/digger@vLatest
+      - uses: diggerhq/digger@vtest-plan-policy-extras
         with:
           ee: 'true'
           setup-terraform: true
@@ -41,3 +41,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DIGGER_LICENSE_KEY: ${{ secrets.DIGGER_LICENSE_KEY }}
           DIGGER_MANAGEMENT_REPO: "https://github.com/diggerhq/demo-ee-features"
+          DIGGER_LOG_LEVEL: DEBUG
