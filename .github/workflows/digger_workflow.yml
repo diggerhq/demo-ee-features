@@ -29,6 +29,7 @@ jobs:
       - uses: diggerhq/digger@vLatest
         with:
           ee: 'true'
+          setup-terraform: true
           digger-spec: ${{ inputs.spec }}
           setup-aws: true
           # recommended to use oidc instead
