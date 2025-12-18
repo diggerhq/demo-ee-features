@@ -21,5 +21,9 @@
   }
 
   deny[msg] {
+      msg := sprintf("Plan Policy Input - Approver teams: %v", [input.approval_teams])
+  }
+
+  deny[msg] {
       msg := sprintf("Plan Policy Input - Terraform Plan Keys: %v", [object.keys(input.terraform)])
   }
