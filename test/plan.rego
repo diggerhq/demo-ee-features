@@ -21,7 +21,7 @@
   }
 
   deny[msg] {
-      msg := sprintf("Plan Policy Input - Approvals: %v", [input.approval_teams])
+      msg := sprintf("Plan Policy Input - Approvaer teams: %v", [input.approval_teams])
   }
 
   deny[msg] {
