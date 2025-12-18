@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: digger drift detection
-      uses: diggerhq/digger@vLatest
+      uses: diggerhq/digger@vtest-plan-extra-data
       with:
         ee: 'true'
         mode: drift-detection
@@ -25,3 +25,4 @@ jobs:
         INPUT_DRIFT_GITHUB_ISSUES: 'true'
         # DIGGER_MANAGEMENT_REPO: "https://github.com/diggerhq/mgmt-repo-one"
         DIGGER_LICENSE_KEY: ${{ secrets.DIGGER_LICENSE_KEY }}
+
