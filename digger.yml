@@ -13,3 +13,5 @@ projects:
     dir: staging/vpc
   - name: staging-cluster
     dir: staging/cluster
+  - name: test
+    dir: test
