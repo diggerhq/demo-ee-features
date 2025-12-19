@@ -19,11 +19,6 @@
       team == team_name
   }
 
-  # Check if plan contains sensitive resource changes
-  has_sensitive_changes(plan_output) {
-      some resource in sensitive_resources
-      contains(plan_output, resource)
-  }
   # ================================================================================
   # PLAN POLICY - Returns set of violation messages
   # ================================================================================
