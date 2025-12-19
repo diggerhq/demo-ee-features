@@ -102,4 +102,4 @@
       not user_in_team("platform")
 
       msg := "Unlock requires user to be in 'platform' team"
-  
+  }  
