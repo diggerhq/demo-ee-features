@@ -20,11 +20,8 @@
   }
 
   # ================================================================================
-  # PLAN POLICY - Returns set of violation messages
+  # PLAN POLICY - Returns set of violation messages (empty set if no violations)
   # ================================================================================
-
-  # Default: no violations (empty set)
-  default plan = set()
 
   # Plan policy: Deny database changes without platform team approval
   plan[msg] {
