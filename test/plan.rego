@@ -23,6 +23,9 @@
   # PLAN POLICY - Returns set of violation messages
   # ================================================================================
 
+  # Default: no violations (empty set)
+  default plan = set()
+
   # Plan policy: Deny database changes without platform team approval
   plan[msg] {
       plan_output := input.plan_output
@@ -133,4 +136,3 @@
 
       msg := "Route53 zone changes require approval from 'platform' team"
   }
-
