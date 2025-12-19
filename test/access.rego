@@ -1,19 +1,71 @@
 
   package digger
 
-  # Allow all for testing, but log what we receive
-  default allow = false
+  # ================================================================================
+  # ACCESS POLICY - Controls who can run which commands
+  # ================================================================================
 
-  allow {
-      # Print inputs by checking conditions that log the values
-      trace(sprintf("Access Policy Input - User: %v", [input.user]))
-      trace(sprintf("Access Policy Input - Organisation: %v", [input.organisation]))
-      trace(sprintf("Access Policy Input - Project: %v", [input.project]))
-      trace(sprintf("Access Policy Input - Action: %v", [input.action]))
-      trace(sprintf("Access Policy Input - Teams: %v", [input.teams]))
-      trace(sprintf("Access Policy Input - Approvals: %v", [input.approvals]))
-      trace(sprintf("Access Policy Input - Plan Policy Violations: %v", [input.planPolicyViolations]))
+  # CRITICAL: Deny apply if there are any plan policy violations
+  deny[msg] {
+      input.action == "digger apply"
+      count(input.planPolicyViolations) > 0
+      msg := sprintf(
+          "DENIED: Cannot apply because plan has %v policy violation(s): %v",
+          [count(input.planPolicyViolations), input.planPolicyViolations]
+      )
+  }
 
-      # Always allow for testing
-      true
+  # Allow plan for everyone
+  allow_command {
+      input.action == "digger plan"
+  }
+
+  # Allow apply only if:
+  # 1. No plan policy violations
+  # 2. Approved by platform team
+  allow_command {
+      input.action == "digger apply"
+      count(input.planPolicyViolations) == 0
+      has_team_approval("platform", input.approval_teams)
+  }
+
+  # Allow apply for production projects only if:
+  # 1. No plan policy violations
+  # 2. Approved by both platform and security teams
+  allow_command {
+      input.action == "digger apply"
+      contains(input.project, "prod")
+      count(input.planPolicyViolations) == 0
+      has_team_approval("platform", input.approval_teams)
+      has_team_approval("security", input.approval_teams)
+  }
+
+  # Deny apply for production without proper approvals
+  deny[msg] {
+      input.action == "digger apply"
+      contains(input.project, "prod")
+
+      # Even if no plan violations, still need proper approvals
+      count(input.planPolicyViolations) == 0
+
+      platform_approved := has_team_approval("platform", input.approval_teams)
+      security_approved := has_team_approval("security", input.approval_teams)
+
+      not (platform_approved and security_approved)
+
+      msg := sprintf(
+          "DENIED: Production apply requires approval from BOTH 'platform' AND 'security' teams. Current approval
+  teams: %v",
+          [input.approval_teams]
+      )
+  }
+
+  # Deny any action if there are unresolved plan violations
+  deny[msg] {
+      count(input.planPolicyViolations) > 0
+      not input.action == "digger plan"  # Allow re-planning to fix violations
+      msg := sprintf(
+          "DENIED: Cannot proceed with '%v' - plan has %v violation(s) that must be resolved first: %v",
+          [input.action, count(input.planPolicyViolations), input.planPolicyViolations]
+      )
   }
