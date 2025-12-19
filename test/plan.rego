@@ -25,8 +25,8 @@
 
   # Deny if null_resource changes without platform team approval (for testing)
   deny[msg] {
-      input.plan_output
-      contains(input.terraform, "null_resource")
+      resource := input.terraform.resource_changes[_]
+      resource.type == "null_resource"
       not has_team_approval("platform", input.approval_teams)
 
       msg := sprintf(
@@ -37,8 +37,9 @@
 
   # Deny if IAM changes without platform team approval
   deny[msg] {
-      input.plan_output
-      contains(input.terraform, "aws_iam")
+      resource := input.terraform.resource_changes[_]
+      resource.type == "aws_iam"
+
       not has_team_approval("platform", input.approval_teams)
 
       msg := sprintf(
@@ -49,8 +50,8 @@
 
   # Deny if IAM changes without security team approval
   deny[msg] {
-      input.plan_output
-      contains(input.terraform, "aws_iam")
+      resource := input.terraform.resource_changes[_]
+      resource.type == "aws_iam"
       not has_team_approval("security", input.approval_teams)
 
       msg := sprintf(
