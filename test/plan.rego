@@ -1,3 +1,26 @@
+package digger
+
+  # ================================================================================
+  # HELPER FUNCTIONS - Define these first
+  # ================================================================================
+
+  # Check if a specific team is in the approval teams list
+  has_team_approval(required_team, approval_teams) {
+      some team in approval_teams
+      team == required_team
+  }
+
+  # Check if user is in a specific team
+  user_in_team(team_name) {
+      some team in input.teams
+      team == team_name
+  }
+
+  # Check if plan contains sensitive resource changes
+  has_sensitive_changes(plan_output) {
+      some resource in sensitive_resources
+      contains(plan_output, resource)
+  }
 
   # List of sensitive resource types that require platform team approval
   sensitive_resources := [
@@ -11,18 +34,6 @@
       "aws_vpc",
       "aws_route53_zone",
   ]
-
-  # Check if plan contains sensitive resource changes
-  has_sensitive_changes(plan_output) {
-      some resource in sensitive_resources
-      contains(plan_output, resource)
-  }
-
-  # Check if a specific team is in the approval teams list
-  has_team_approval(required_team, approval_teams) {
-      some team in approval_teams
-      team == required_team
-  }
 
   # Plan policy: Deny if sensitive resources without platform team approval
   plan[msg] {
