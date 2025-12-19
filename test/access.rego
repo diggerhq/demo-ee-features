@@ -1,8 +1,7 @@
+
   package digger
 
-  # ================================================================================
-  # ACCESS POLICY - Controls who can run which commands
-  # ================================================================================
+  import future.keywords.in
 
   # ================================================================================
   # HELPER FUNCTIONS - Define these first
@@ -25,6 +24,23 @@
       some resource in sensitive_resources
       contains(plan_output, resource)
   }
+
+  # List of sensitive resource types
+  sensitive_resources := [
+      "aws_db_instance",
+      "aws_rds_cluster",
+      "aws_s3_bucket",
+      "aws_iam_role",
+      "aws_iam_policy",
+      "aws_kms_key",
+      "aws_security_group",
+      "aws_vpc",
+      "aws_route53_zone",
+  ]
+
+  # ================================================================================
+  # ACCESS POLICY - Controls who can run which commands
+  # ================================================================================
 
   # CRITICAL: Deny apply if there are any plan policy violations
   deny[msg] {
@@ -91,4 +107,10 @@
           "DENIED: Cannot proceed with '%v' - plan has %v violation(s) that must be resolved first: %v",
           [input.action, count(input.planPolicyViolations), input.planPolicyViolations]
       )
+  }
+
+  # Allow platform team members to unlock
+  allow_command {
+      input.action == "digger unlock"
+      user_in_team("platform")
   }
