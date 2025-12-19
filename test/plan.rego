@@ -1,4 +1,7 @@
-package digger
+
+  package digger
+
+  import future.keywords.in
 
   # ================================================================================
   # HELPER FUNCTIONS - Define these first
@@ -21,19 +24,6 @@ package digger
       some resource in sensitive_resources
       contains(plan_output, resource)
   }
-
-  # List of sensitive resource types that require platform team approval
-  sensitive_resources := [
-      "aws_db_instance",
-      "aws_rds_cluster",
-      "aws_s3_bucket",
-      "aws_iam_role",
-      "aws_iam_policy",
-      "aws_kms_key",
-      "aws_security_group",
-      "aws_vpc",
-      "aws_route53_zone",
-  ]
 
   # Plan policy: Deny if sensitive resources without platform team approval
   plan[msg] {
@@ -59,10 +49,7 @@ package digger
   # Plan policy: Deny IAM changes without platform approval
   plan[msg] {
       plan_output := input.plan_output
-
-      # Check for any IAM resource changes
       contains(plan_output, "aws_iam_role")
-
       not has_team_approval("platform", input.approval_teams)
 
       msg := sprintf(
@@ -74,10 +61,7 @@ package digger
   # Plan policy: Deny IAM changes without security approval
   plan[msg] {
       plan_output := input.plan_output
-
-      # Check for any IAM resource changes
       contains(plan_output, "aws_iam_role")
-
       not has_team_approval("security", input.approval_teams)
 
       msg := sprintf(
