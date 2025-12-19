@@ -11,6 +11,7 @@ package digger
      "aws_security_group",
      "aws_vpc",
      "aws_route53_zone",
+     "null_resource",
  ]
 
  # Check if plan contains sensitive resource changes
