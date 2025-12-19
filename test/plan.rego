@@ -25,6 +25,10 @@
       contains(plan_output, resource)
   }
 
+  # ================================================================================
+  # PLAN POLICY - Returns set of violation messages
+  # ================================================================================
+
   # Plan policy: Deny if sensitive resources without platform team approval
   plan[msg] {
       plan_output := input.plan_output
@@ -53,7 +57,7 @@
       not has_team_approval("platform", input.approval_teams)
 
       msg := sprintf(
-          "IAM changes require approval from 'platform' team. Current approval teams: %v",
+          "IAM role changes require approval from 'platform' team. Current approval teams: %v",
           [input.approval_teams]
       )
   }
@@ -65,7 +69,7 @@
       not has_team_approval("security", input.approval_teams)
 
       msg := sprintf(
-          "IAM changes require approval from 'security' team. Current approval teams: %v",
+          "IAM role changes require approval from 'security' team. Current approval teams: %v",
           [input.approval_teams]
       )
   }
