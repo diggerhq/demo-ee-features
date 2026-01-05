@@ -13,6 +13,8 @@ run-name: ${{ inputs.run_name }}
 jobs:
   digger-job:
     runs-on: ubuntu-latest
+    env:
+        DIGGER_LOG_LEVEL: DEBUG
     permissions:
       contents: write      # required to merge PRs
       actions: write       # required for plan persistence
@@ -41,4 +43,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DIGGER_LICENSE_KEY: ${{ secrets.DIGGER_LICENSE_KEY }}
           DIGGER_MANAGEMENT_REPO: "https://github.com/diggerhq/demo-ee-features"
-          DIGGER_LOG_LEVEL: DEBUG
