@@ -37,6 +37,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           disable-locking: false
           log-level: DEBUG
+          # Plan storage configuration
+          upload-plan-destination: "aws"
+          upload-plan-destination-s3-bucket: "digger-artifacts-739940681129"
+          upload-plan-destination-s3-encryption-enabled: "true"  # Recommended
+          upload-plan-destination-s3-encryption-type: "AES256"   # Matches our bucket config
+          
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
