@@ -23,9 +23,10 @@
   # PLAN POLICY - Also uses deny (not plan)
   # ================================================================================
 
+
   deny[msg] {
-     true
-     msg := sprintf("I'm just denying you for funn")
+      true
+      msg := "I'm just denying you for fun"
   }
 
   # Deny if null_resource changes without platform team approval (for testing)
