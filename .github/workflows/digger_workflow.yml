@@ -26,7 +26,7 @@ jobs:
         run: echo digger run ${{ inputs.id }}
         shell: bash      
       - uses: actions/checkout@v4
-      - uses: diggerhq/digger@v0.6.139
+      - uses: diggerhq/digger@vtest-apply-requirements
         with:
           ee: 'true'
           setup-terraform: true
